@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Image Compression App</title>
+</head>
+<body>
+    <h1>Image Compression App</h1>
+    <form id="upload-form" method="POST" enctype="multipart/form-data">
+        <input type="file" id="image" name="image" accept="image/*">
+        <button type="submit">Compress Image</button>
+    </form>
+    <p id="loading" style="display: none;">Compressing image...</p>
+    <img id="result" style="display: none;" alt="Compressed image will appear here">
+    <a id="download-link" href="" download="compressed_image.jpg" style="display: none;">Download Image</a>
+    <script>
+        document.getElementById('upload-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            document.getElementById('loading').style.display = 'block';  // Show the loading text
+            var formData = new FormData(event.target);
+            fetch('https://literate-cod-gj957v9pjx4c95qg-8080.app.github.dev/compress', {method: 'POST', body: formData})
+                .then(response => response.blob())
+                .then(image => {
+                    var imageElement = document.getElementById('result');
+                    var url = URL.createObjectURL(image);
+                    imageElement.src = url;
+                    imageElement.style.display = 'block';  // Show the image element
+                    document.getElementById('loading').style.display = 'none';  // Hide the loading text
+                    // Enable the download link
+                    var downloadLink = document.getElementById('download-link');
+                    downloadLink.href = url;
+                    downloadLink.style.display = 'block';
+                })
+                .catch(console.error);
+        });
+    </script>
+</body>
+</html>
