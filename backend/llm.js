@@ -15,7 +15,7 @@ export default {
     let simple = {
       prompt: prompt
     };
-    let response = await ai.run('@cf/meta/llama-2-7b-chat-int8', simple);
+    let response = await ai.run('@cf/meta/llama-3-8b-instruct', simple);
     tasks.push({ inputs: simple, response });
 
     return Response.json(tasks);
