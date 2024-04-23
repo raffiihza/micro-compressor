@@ -5,11 +5,17 @@ export default {
     const tasks = [];
     const ai = new Ai(env.AI);
 
+    // Extract the prompt from the request URL
     const url = new URL(request.url);
     const prompt = url.searchParams.get('prompt');
 
     if (!prompt) {
-      return new Response("please fill prompt", {status: 400});
+      return new Response("please fill prompt", {
+        status: 400,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+      });
     }
 
     let simple = {
@@ -18,6 +24,10 @@ export default {
     let response = await ai.run('@cf/meta/llama-3-8b-instruct', simple);
     tasks.push({ inputs: simple, response });
 
-    return Response.json(tasks);
+    return new Response(JSON.stringify(tasks), {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+    });
   }
 };
