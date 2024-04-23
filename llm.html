@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Prompt Input</title>
+</head>
+<body>
+  <form id="promptForm">
+    <label for="prompt">Prompt:</label><br>
+    <input type="text" id="prompt" name="prompt"><br>
+    <input type="submit" value="Submit">
+  </form>
+  <p id="loading" style="display: none;">Loading...</p>
+  <p id="response"></p>
+
+  <script>
+    document.getElementById('promptForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      var prompt = document.getElementById('prompt').value;
+      var loading = document.getElementById('loading');
+      var responseElement = document.getElementById('response');
+
+      loading.style.display = 'block';
+      responseElement.textContent = '';
+
+      fetch('https://llama3.llmeai.workers.dev/?prompt=' + encodeURIComponent(prompt))
+        .then(response => response.json())
+        .then(data => {
+          loading.style.display = 'none';
+          var responseText = data[0].response.response;
+          responseElement.innerHTML = responseText.replace(/\n/g, '<br>');
+        })
+        .catch(error => {
+          loading.style.display = 'none';
+          responseElement.textContent = 'Error: ' + error;
+        });
+    });
+  </script>
+</body>
+</html>
