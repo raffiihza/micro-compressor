@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generate Image</title>
+</head>
+<body>
+  <h1>Generate Image with Stable Diffusion</h1>
+  <form id="prompt-form">
+    <label for="prompt">Enter your prompt:</label>
+    <input type="text" id="prompt" name="prompt" required>
+    <button type="submit">Generate</button>
+    <p id="status">Ready</p>
+  </form>
+  <div id="image-container"></div>
+  <script>
+  const form = document.getElementById('prompt-form');
+  const promptInput = document.getElementById('prompt');
+  const statusText = document.getElementById('status');
+  const imageContainer = document.getElementById('image-container');
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault(); // Prevent default form submission
+
+    statusText.textContent = 'Loading...';
+
+    const prompt = promptInput.value;
+
+    const url = new URL('http://imageai.utseai.workers.dev');
+    url.searchParams.append('prompt', prompt);
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
+      }
+
+      const blob = await response.blob();
+      const imageUrl = URL.createObjectURL(blob);
+
+      imageContainer.innerHTML = `<img src="${imageUrl}" alt="Generated Image">`;
+    } catch (error) {
+      statusText.textContent = `Error: ${error.message}`;
+    } finally {
+      statusText.textContent = 'Ready';
+    }
+  });
+  </script>
+</body>
+</html>
