@@ -8,6 +8,10 @@ import uuid
 app = Flask(__name__)
 CORS(app)  # This will enable CORS for all routes
 
+@app.route('/', methods=['GET', 'HEAD'])
+def health_check():
+    return "The service is up"
+
 @app.route('/compress', methods=['POST'])
 def compress_image():
     file = request.files['image']

@@ -10,14 +10,14 @@
         <button type="submit">Compress Image</button>
     </form>
     <p id="loading" style="display: none;">Compressing image...</p>
-    <img id="result" style="display: none;" alt="Compressed image will appear here">
-    <a id="download-link" href="" download="compressed_image.jpg" style="display: none;">Download Image</a>
+    <p><a id="download-link" href="" download="compressed_image.jpg" style="display: none;">Download Image</a></p>
+    <p><img id="result" style="display: none;" alt="Compressed image will appear here"></p>
     <script>
         document.getElementById('upload-form').addEventListener('submit', function(event) {
             event.preventDefault();
             document.getElementById('loading').style.display = 'block';  // Show the loading text
             var formData = new FormData(event.target);
-            fetch('https://literate-cod-gj957v9pjx4c95qg-8080.app.github.dev/compress', {method: 'POST', body: formData})
+            fetch('https://raffiihza-compressimage.onrender.com/compress', {method: 'POST', body: formData})
                 .then(response => response.blob())
                 .then(image => {
                     var imageElement = document.getElementById('result');
