@@ -1,0 +1,6 @@
+flask
+flask_restful
+flask_cors
+pypdf
+werkzeug
+pillow

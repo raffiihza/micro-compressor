@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+    <title>Upload a PDF</title>
+</head>
+<body>
+    <h1>Upload a PDF</h1>
+    <form id="upload-form" method="post" enctype="multipart/form-data">
+        <input type="file" id="file" name="file">
+        <input type="submit" value="Upload">
+    </form>
+    <p id="status"></p>
+    <a id="download-link" href="#" download style="display: none;">Download</a>
+    <script>
+        document.getElementById('upload-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            var formData = new FormData();
+            formData.append('file', document.getElementById('file').files[0]);
+            document.getElementById('status').textContent = 'Loading...';
+            fetch('https://raffiihza-compresspdf.onrender.com/compress', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                var url = window.URL.createObjectURL(blob);
+                document.getElementById('download-link').href = url;
+                document.getElementById('status').textContent = 'Compression successful, download your compressed PDF below';
+                document.getElementById('download-link').style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
