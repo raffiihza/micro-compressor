@@ -1,37 +1,115 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Image Compression App</title>
-</head>
-<body>
-    <h1>Image Compression App</h1>
-    <form id="upload-form" method="POST" enctype="multipart/form-data">
-        <input type="file" id="image" name="image" accept="image/*">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QuadServ | Compress Image</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="#">QuadServ</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="imagecompress.html" target="_blank"
+              >Compress Image</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="generate.html" target="_blank"
+              >Generate AI Image</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="llm.html" target="_blank"
+              >Generate AI Text</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="pdfcompress.html" target="_blank"
+              >Compress PDF</a
+            >
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="about.html" target="_blank">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="https://github.com/raffiihza/micro-compressor"
+              target="_blank"
+              >GitHub Repo</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container mt-3">
+      <h1>Image Compression App</h1>
+      <form id="upload-form" method="POST" enctype="multipart/form-data">
+        <input type="file" id="image" name="image" accept="image/*" />
         <button type="submit">Compress Image</button>
-    </form>
-    <p id="loading" style="display: none;">Compressing image...</p>
-    <p><a id="download-link" href="" download="compressed_image.jpg" style="display: none;">Download Image</a></p>
-    <p><img id="result" style="display: none;" alt="Compressed image will appear here"></p>
-    <script>
-        document.getElementById('upload-form').addEventListener('submit', function(event) {
+      </form>
+      <p id="loading" style="display: none">Compressing image...</p>
+      <p>
+        <a
+          id="download-link"
+          href=""
+          download="compressed_image.jpg"
+          style="display: none"
+          >Download Image</a
+        >
+      </p>
+      <p>
+        <img
+          id="result"
+          style="display: none"
+          alt="Compressed image will appear here"
+        />
+      </p>
+      <script>
+        document
+          .getElementById("upload-form")
+          .addEventListener("submit", function (event) {
             event.preventDefault();
-            document.getElementById('loading').style.display = 'block';  // Show the loading text
+            document.getElementById("loading").style.display = "block"; // Show the loading text
             var formData = new FormData(event.target);
-            fetch('https://raffiihza-compressimage.onrender.com/compress', {method: 'POST', body: formData})
-                .then(response => response.blob())
-                .then(image => {
-                    var imageElement = document.getElementById('result');
-                    var url = URL.createObjectURL(image);
-                    imageElement.src = url;
-                    imageElement.style.display = 'block';  // Show the image element
-                    document.getElementById('loading').style.display = 'none';  // Hide the loading text
-                    // Enable the download link
-                    var downloadLink = document.getElementById('download-link');
-                    downloadLink.href = url;
-                    downloadLink.style.display = 'block';
-                })
-                .catch(console.error);
-        });
-    </script>
-</body>
+            fetch("https://raffiihza-compressimage.onrender.com/compress", {
+              method: "POST",
+              body: formData,
+            })
+              .then((response) => response.blob())
+              .then((image) => {
+                var imageElement = document.getElementById("result");
+                var url = URL.createObjectURL(image);
+                imageElement.src = url;
+                imageElement.style.display = "block"; // Show the image element
+                document.getElementById("loading").style.display = "none"; // Hide the loading text
+                // Enable the download link
+                var downloadLink = document.getElementById("download-link");
+                downloadLink.href = url;
+                downloadLink.style.display = "block";
+              })
+              .catch(console.error);
+          });
+      </script>
+    </div>
+  </body>
 </html>

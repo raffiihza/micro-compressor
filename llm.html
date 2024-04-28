@@ -1,39 +1,103 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Prompt Input</title>
-</head>
-<body>
-  <form id="promptForm">
-    <label for="prompt">Prompt:</label><br>
-    <input type="text" id="prompt" name="prompt"><br>
-    <input type="submit" value="Submit">
-  </form>
-  <p id="loading" style="display: none;">Loading...</p>
-  <p id="response"></p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>QuadServ | Generate AI Text</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+      <a class="navbar-brand" href="#">QuadServ</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="imagecompress.html" target="_blank"
+              >Compress Image</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="generate.html" target="_blank"
+              >Generate AI Image</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="llm.html" target="_blank"
+              >Generate AI Text</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="pdfcompress.html" target="_blank"
+              >Compress PDF</a
+            >
+          </li>
+        </ul>
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="about.html" target="_blank">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="https://github.com/raffiihza/micro-compressor"
+              target="_blank"
+              >GitHub Repo</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container mt-3">
+      <form id="promptForm">
+        <label for="prompt">Prompt:</label><br />
+        <input type="text" id="prompt" name="prompt" /><br />
+        <input type="submit" value="Submit" />
+      </form>
+      <p id="loading" style="display: none">Loading...</p>
+      <p id="response"></p>
 
-  <script>
-    document.getElementById('promptForm').addEventListener('submit', function(event) {
-      event.preventDefault();
-      var prompt = document.getElementById('prompt').value;
-      var loading = document.getElementById('loading');
-      var responseElement = document.getElementById('response');
+      <script>
+        document
+          .getElementById("promptForm")
+          .addEventListener("submit", function (event) {
+            event.preventDefault();
+            var prompt = document.getElementById("prompt").value;
+            var loading = document.getElementById("loading");
+            var responseElement = document.getElementById("response");
 
-      loading.style.display = 'block';
-      responseElement.textContent = '';
+            loading.style.display = "block";
+            responseElement.textContent = "";
 
-      fetch('https://llama3.llmeai.workers.dev/?prompt=' + encodeURIComponent(prompt))
-        .then(response => response.json())
-        .then(data => {
-          loading.style.display = 'none';
-          var responseText = data[0].response.response;
-          responseElement.innerHTML = responseText.replace(/\n/g, '<br>');
-        })
-        .catch(error => {
-          loading.style.display = 'none';
-          responseElement.textContent = 'Error: ' + error;
-        });
-    });
-  </script>
-</body>
+            fetch(
+              "https://llama3.llmeai.workers.dev/?prompt=" +
+                encodeURIComponent(prompt)
+            )
+              .then((response) => response.json())
+              .then((data) => {
+                loading.style.display = "none";
+                var responseText = data[0].response.response;
+                responseElement.innerHTML = responseText.replace(/\n/g, "<br>");
+              })
+              .catch((error) => {
+                loading.style.display = "none";
+                responseElement.textContent = "Error: " + error;
+              });
+          });
+      </script>
+    </div>
+  </body>
 </html>
