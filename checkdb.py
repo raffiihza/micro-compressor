@@ -20,7 +20,7 @@ except Exception as e:
 try:
     conn = psycopg2.connect(DATABASE_URL_2)
     conn.close()
-    print("1st database is okay")
+    print("2st database is okay")
 except Exception as e:
     print("Error:", e)
-    print("1st database is error")
+    print("2st database is error")
