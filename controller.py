@@ -35,7 +35,7 @@ def store_text(db, prompt, text):
     except (Exception, psycopg2.Error) as error:
         print("Error while adding data to PostgreSQL:", error)
 
-def reset_table(db):
+def reset(db):
     try:
         conn = psycopg2.connect(db)
         cursor = conn.cursor()

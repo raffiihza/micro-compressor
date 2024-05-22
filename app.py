@@ -29,7 +29,7 @@ def generate_image_history():
 
 @app.route("/generate/image/history/reset")
 def generate_image_history_reset():
-    reset_table(DATABASE_URL)
+    reset(DATABASE_URL)
     return redirect(url_for('generate_image_history'))
 
 @app.route("/generate/text")
@@ -41,9 +41,13 @@ def generate_text_history():
     history_data = get(DATABASE_URL_2)
     return render_template("texthistory.html", title="History Text Generation", history_data=history_data)
 
+@app.route("/generate/text/store")
+def generate_text_store():
+    return 'test'
+
 @app.route("/generate/text/history/reset")
 def generate_text_history_reset():
-    reset_table(DATABASE_URL_2)
+    reset(DATABASE_URL_2)
     return redirect(url_for('generate_text_history'))
 
 @app.route("/search/weather")
