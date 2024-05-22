@@ -1,36 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+{% include 'header.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>PentaServ | About Us</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-</head>
-
-<body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="index.html">PentaServ</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item"><a class="nav-link" href="imagecompress.html">Compress Image</a></li>
-                <li class="nav-item"><a class="nav-link" href="generate.html">Generate AI Image</a></li>
-                <li class="nav-item"><a class="nav-link" href="llm.html">Generate AI Text</a></li>
-                <li class="nav-item"><a class="nav-link" href="pdfcompress.html">Compress PDF</a></li>
-                <li class="nav-item"><a class="nav-link" href="weather.html">Weather Search</a></li>
-            </ul>
-            <ul class="navbar-nav">
-                <li class="nav-item"><a class="nav-link" href="about.html">About Us</a></li>
-                <li class="nav-item"><a class="nav-link" href="https://github.com/raffiihza/micro-compressor"
-                        target="_blank">GitHub Repo</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
     <div class="container mt-3 mb-3">
         <div class="card mb-3">
             <div class="card-header">What is PentaServ?</div>
@@ -40,7 +9,7 @@
                     accessed for free.
                 </p>
                 <p class="card-text">
-                    <b>PentaServ</b> was released in April 2024. It was developed by a team of four people from SI-45-08 class (mentioned
+                    <b>PentaServ</b> was released in May 2024. It was developed by a team of four people from SI-45-08 class (mentioned
                     below) as part of their mid-term project for Enterprise Application Integration class. The team
                     utilized a variety of technologies to build PentaServ. For the frontend, they used HTML, CSS, and
                     Javascript, enhanced with the Bootstrap framework. The backend was developed using Python and
@@ -60,7 +29,7 @@
               <div class="row">
                 <div class="col-sm-3">
                   <div class="card">
-                    <img class="card-img-top" src="images/image1.jpg" alt="Author 1">
+                    <img class="card-img-top" src="{{ url_for('static', filename='images/image1.jpg') }}" alt="Author 1">
                     <div class="card-body">
                       <h5 class="card-title">Fatih Albari</h5>
                       <p class="card-text">1202210330</p>
@@ -69,7 +38,7 @@
                 </div>
                 <div class="col-sm-3">
                   <div class="card">
-                    <img class="card-img-top" src="images/image2.jpg" alt="Author 2">
+                    <img class="card-img-top" src="{{ url_for('static', filename='images/image2.jpg') }}" alt="Author 2">
                     <div class="card-body">
                       <h5 class="card-title">Raffi Ihza Zuhairnawan</h5>
                       <p class="card-text">1202210316</p>
@@ -78,7 +47,7 @@
                 </div>
                 <div class="col-sm-3">
                   <div class="card">
-                    <img class="card-img-top" src="images/image3.jpg" alt="Author 3">
+                    <img class="card-img-top" src="{{ url_for('static', filename='images/image3.jpg') }}" alt="Author 3">
                     <div class="card-body">
                       <h5 class="card-title">Samuel Pasha Ginting</h5>
                       <p class="card-text">1202210390</p>
@@ -87,7 +56,7 @@
                 </div>
                 <div class="col-sm-3">
                   <div class="card">
-                    <img class="card-img-top" src="images/image4.jpg" alt="Author 4">
+                    <img class="card-img-top" src="{{ url_for('static', filename='images/image4.jpg') }}" alt="Author 4">
                     <div class="card-body">
                       <h5 class="card-title">Sulthan Jihad</h5>
                       <p class="card-text">1202210419</p>
