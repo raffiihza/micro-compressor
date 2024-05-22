@@ -2,6 +2,7 @@ from flask import Flask, render_template, redirect, url_for, jsonify, request
 import os
 from db import DATABASE_URL, DATABASE_URL_2
 from controller import *
+from operator import itemgetter
 
 app = Flask(__name__)
     
@@ -22,6 +23,14 @@ def compress_pdf():
 def generate_image():
     return render_template("generate.html", title="Generate Image")
 
+@app.route("/generate/image/store", methods=['POST'])
+def generate_image_store():
+    prompt = request.args.get('prompt')
+    image = request.args.get('text')
+    store_text(DATABASE_URL_2, prompt, image)
+
+    return jsonify({'status': 'success', 'prompt': prompt})
+
 @app.route("/generate/image/history")
 def generate_image_history():
     history_data = get(DATABASE_URL)
@@ -39,6 +48,7 @@ def generate_text():
 @app.route("/generate/text/history")
 def generate_text_history():
     history_data = get(DATABASE_URL_2)
+    history_data.sort(key=itemgetter(0), reverse=True)
     return render_template("texthistory.html", title="History Text Generation", history_data=history_data)
 
 @app.route("/generate/text/store", methods=['GET'])
