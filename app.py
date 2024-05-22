@@ -1,8 +1,13 @@
-from flask import Flask, render_template, redirect, url_for
+from flask import Flask, render_template, redirect, url_for, jsonify
 import os, requests
+import psycopg2
+from db import check_db
 
 app = Flask(__name__)
 
+DB_URL_1 = os.environ("DB_URL")
+DB_URL_2 = os.environ("DB_URL2")
+    
 @app.route("/")
 def home():
     return render_template("index.html", title="Home")
