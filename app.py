@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, url_for, jsonify, request
-import os
+import os, base64
 from db import DATABASE_URL, DATABASE_URL_2
 from controller import *
 from operator import itemgetter
@@ -25,16 +25,23 @@ def generate_image():
 
 @app.route("/generate/image/store", methods=['POST'])
 def generate_image_store():
-    prompt = request.args.get('prompt')
-    image = request.args.get('text')
-    store_text(DATABASE_URL_2, prompt, image)
-
-    return jsonify({'status': 'success', 'prompt': prompt})
+    prompt = request.form.get('prompt')
+    image = request.files['image']
+    
+    store_image(DATABASE_URL, prompt, image.read())
+    
+    return 'Image stored successfully'
 
 @app.route("/generate/image/history")
 def generate_image_history():
     history_data = get(DATABASE_URL)
-    return render_template("imagehistory.html", title="History Image Generation", history_data=history_data)
+    processed_history_data = []
+    for row in history_data:
+        row_list = list(row)
+        row_list[2] = base64.b64encode(row[2]).decode('utf-8')
+        processed_history_data.append(row_list)
+        processed_history_data = sorted(processed_history_data, key=lambda x: x[0], reverse=True)
+    return render_template("imagehistory.html", title="History Image Generation", history_data=processed_history_data)
 
 @app.route("/generate/image/history/reset")
 def generate_image_history_reset():

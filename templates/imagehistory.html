@@ -9,7 +9,7 @@
       <div class="card-header">{{ row[1] }}</div>
       <div class="card-body">
           <div class="mb-3">
-            <img src="data:image/png;base64,{{ row[2]|b64encode }}" alt="Image">
+            <img src="data:image/png;base64,{{ row[2] }}" alt="{{ row[1] }}" class="img-thumbnail" width="40%">
           </div>
       </div>
     </div>
