@@ -25,33 +25,41 @@
 
 
         <script>
-          document
-            .getElementById("promptForm")
-            .addEventListener("submit", function (event) {
-              event.preventDefault();
-              var prompt = document.getElementById("prompt").value;
-              var loading = document.getElementById("loading");
-              var responseElement = document.getElementById("response");
-
-              loading.style.display = "block";
-              responseElement.textContent = "";
-
-              fetch(
-                "https://llama3.llmeai.workers.dev/?prompt=" +
-                encodeURIComponent(prompt)
-              )
-                .then((response) => response.json())
-                .then((data) => {
-                  loading.style.display = "none";
-                  var responseText = data[0].response.response;
-                  responseElement.innerHTML = responseText.replace(/\n/g, "<br>");
-                })
-                .catch((error) => {
-                  loading.style.display = "none";
-                  responseElement.textContent = "Error: " + error;
-                });
-            });
-        </script>
+          document.getElementById("promptForm").addEventListener("submit", function (event) {
+            event.preventDefault();
+            var prompt = document.getElementById("prompt").value;
+            var loading = document.getElementById("loading");
+            var responseElement = document.getElementById("response");
+          
+            loading.style.display = "block";
+            responseElement.textContent = "";
+          
+            fetch("https://llama3.llmeai.workers.dev/?prompt=" + encodeURIComponent(prompt))
+              .then((response) => response.json())
+              .then((data) => {
+                var responseText = data[0].response.response;
+          
+                // Visit the /store route with the prompt and response text
+                return fetch(
+                  "/generate/text/store?prompt=" + encodeURIComponent(prompt) + "&text=" + encodeURIComponent(responseText)
+                )
+                  .then((storeResponse) => {
+                    if (!storeResponse.ok) {
+                      throw new Error('Failed to store the response');
+                    }
+                    return storeResponse.json();
+                  })
+                  .then((storeData) => {
+                    loading.style.display = "none";
+                    responseElement.innerHTML = responseText.replace(/\n/g, "<br>");
+                  });
+              })
+              .catch((error) => {
+                loading.style.display = "none";
+                responseElement.textContent = "Error: " + error;
+              });
+          });
+          </script>
       </div>
     </div>
   </div>

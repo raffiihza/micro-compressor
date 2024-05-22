@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, jsonify
+from flask import Flask, render_template, redirect, url_for, jsonify, request
 import os
 from db import DATABASE_URL, DATABASE_URL_2
 from controller import *
@@ -41,9 +41,13 @@ def generate_text_history():
     history_data = get(DATABASE_URL_2)
     return render_template("texthistory.html", title="History Text Generation", history_data=history_data)
 
-@app.route("/generate/text/store")
+@app.route("/generate/text/store", methods=['GET'])
 def generate_text_store():
-    return 'test'
+    prompt = request.args.get('prompt')
+    text = request.args.get('text')
+    store_text(DATABASE_URL_2, prompt, text)
+
+    return jsonify({'status': 'success', 'prompt': prompt, 'text': text})
 
 @app.route("/generate/text/history/reset")
 def generate_text_history_reset():

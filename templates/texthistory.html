@@ -3,7 +3,7 @@
   <div class="container mt-3 mb-3">
     <h2 class="mb-3">History Text Generation</h2>
     <a href="/generate/text" class="btn btn-primary">Back</a>
-    <a href="/generate/text/history/reset" class="btn btn-primary" onclick="confirm('Are you sure to reset all the history?')">Reset History</a>
+    <a href="/generate/text/history/reset" class="btn btn-primary" onclick="return confirm('Are you sure to reset all the history?')">Reset History</a>
     {% for row in history_data %}
     <div class="card mt-3">
       <div class="card-header">{{ row[1] }}</div>
