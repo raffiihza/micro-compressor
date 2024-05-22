@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>PentaServ | Generate AI Image</title>
+  <title>PentaServ | Weather</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
 </head>
 
@@ -43,55 +43,49 @@
   </nav>
   <div class="container mt-3 mb-3">
     <div class="card">
-      <div class="card-header">Generate Image with Stable Diffusion</div>
+      <div class="card-header">Search Weather</div>
       <div class="card-body">
-        <p class="card-text text-danger">
-          <b>Please do not abuse this free service!</b>
-        </p>
-
-        <form id="prompt-form" class="mt-3">
+        <form id="prompt-form">
           <div class="mb-3">
-            <label for="prompt" class="form-label">Enter your prompt:</label>
-            <input type="text" id="prompt" name="prompt" class="form-control" required />
+            <label for="prompt" class="form-label">Enter the city name:</label>
+            <input type="text" id="city" name="city" class="form-control" required />
           </div>
           <button type="submit" class="btn btn-primary">Generate</button>
           <p id="status" class="mt-2"></p>
+          <div id="weather-result" class="mt-2"></div>
         </form>
 
-        <div id="image-container"></div>
         <script>
-          const form = document.getElementById("prompt-form");
-          const promptInput = document.getElementById("prompt");
-          const statusText = document.getElementById("status");
-          const imageContainer = document.getElementById("image-container");
-
-          form.addEventListener("submit", async (event) => {
-            event.preventDefault(); // Prevent default form submission
-
-            statusText.textContent = "Loading...";
-
-            const prompt = promptInput.value;
-
-            const url = new URL("https://imageai.utseai.workers.dev");
-            url.searchParams.append("prompt", prompt);
-
-            try {
-              const response = await fetch(url);
-              if (!response.ok) {
-                throw new Error(`Error: ${response.statusText}`);
-              }
-
-              const blob = await response.blob();
-              const imageUrl = URL.createObjectURL(blob);
-
-              imageContainer.innerHTML = `<p><a href="${imageUrl}" download="GeneratedImage.png">Download Image</a></p><p><img src="${imageUrl}" alt="Generated Image" class="img-thumbnail" width="40%"></p>`;
-            } catch (error) {
-              statusText.textContent = `Error: ${error.message}`;
-            } finally {
-              statusText.textContent = "The image has been generated!";
-            }
-          });
+            document.getElementById('prompt-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+                const city = document.getElementById('city').value;
+                const status = document.getElementById('status');
+                const result = document.getElementById('weather-result');
+                status.textContent = 'Loading...';
+    
+                fetch(`https://raffiihza-weather-search.onrender.com/weather?city=${city}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        status.textContent = '';
+                        if (data.error) {
+                            result.innerHTML = `<div class="alert alert-danger">${data.error}</div>`;
+                        } else {
+                            result.innerHTML = `
+                                <div class="alert alert-success">
+                                    <h4>${data.city}</h4>
+                                    <p>Temperature: ${data.temperature}°C</p>
+                                    <p>Description: ${data.description}</p>
+                                </div>
+                            `;
+                        }
+                    })
+                    .catch(error => {
+                        status.textContent = '';
+                        result.innerHTML = `<div class="alert alert-danger">Error fetching weather data</div>`;
+                    });
+            });
         </script>
+
       </div>
     </div>
   </div>
