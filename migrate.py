@@ -20,7 +20,7 @@ def create_table(conn):
 def main():
     try:
         # Connect to the PostgreSQL database
-        conn = psycopg2.connect(POSTGRES_URI)
+        conn = psycopg2.connect(DB_URL)
 
         # Create the 'history' table
         create_table(conn)
