@@ -20,6 +20,14 @@ def compress_pdf():
 def generate_image():
     return render_template("generate.html", title="Generate Image")
 
+@app.route("/generate/image/history")
+def generate_image_history():
+    return render_template("imagehistory.html", title="History Image Generation")
+
+@app.route("/generate/text/history")
+def generate_text_history():
+    return render_template("texthistory.html", title="History Text Generation")
+
 @app.route("/generate/text")
 def generate_text():
     return render_template("llm.html", title="Generate Text")

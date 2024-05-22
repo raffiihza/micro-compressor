@@ -1,14 +1,7 @@
 # This file is intended for migrating database tables
 
 import psycopg2
-from psycopg2 import sql
-from dotenv import load_dotenv
-import os
-
-load_dotenv()
-
-DATABASE_URL = os.getenv('DATABASE_URL')
-DATABASE_URL_2 = os.getenv('DATABASE_URL_2')
+from db import DATABASE_URL, DATABASE_URL_2
 
 def create_table_image(conn):
     """Create a table named 'history'."""
