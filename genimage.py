@@ -32,4 +32,4 @@ def generate_image_history():
 @genimage.route("/generate/image/history/reset")
 def generate_image_history_reset():
     reset(DATABASE_URL)
-    return redirect(url_for('generate_image_history'))
+    return redirect(url_for('genimage.generate_image_history'))

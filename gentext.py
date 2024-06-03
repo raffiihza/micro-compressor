@@ -26,4 +26,4 @@ def generate_text_store():
 @gentext.route("/generate/text/history/reset")
 def generate_text_history_reset():
     reset(DATABASE_URL_2)
-    return redirect(url_for('generate_text_history'))
+    return redirect(url_for('gentext.generate_text_history'))
