@@ -1,0 +1,30 @@
+export default {
+    async fetch(request, env) {
+      if (request.method === 'POST') {
+        const formData = await request.formData();
+        const audioFile = formData.get('audio');
+  
+        if (!audioFile) {
+          return new Response('Audio file is required', { status: 400 });
+        }
+  
+        const blob = await audioFile.arrayBuffer();
+  
+        const inputs = {
+          audio: [...new Uint8Array(blob)]
+        };
+  
+        const response = await env.AI.run('@cf/openai/whisper-tiny-en', inputs);
+  
+        return new Response(JSON.stringify({ inputs, response }), {
+          headers: {  
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*' 
+          },
+          
+        });
+      }
+  
+      return new Response('Method not allowed', { status: 405 });
+    }
+  };

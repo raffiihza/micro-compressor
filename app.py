@@ -27,6 +27,14 @@ def compress_pdf():
 def search_weather():
     return render_template("weather.html", title="Search Weather")
 
+@app.route("/transcribe")
+def transcribe():
+    return render_template("transcribe.html", title="Transcribe Sound to Text")
+
+@app.route("/chat/pdf")
+def chat_pdf():
+    return render_template("chatpdf.html", title="PDF Communicator AI")
+
 @app.route("/about")
 def about():
     return render_template("about.html", title="About Us")
