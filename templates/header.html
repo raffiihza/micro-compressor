@@ -18,8 +18,17 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item {% if request.path == '/compress/image' %}active{% endif %}"><a class="nav-link" href="/compress/image">Compress Image</a></li>
-            <li class="nav-item {% if request.path == '/generate/image' %}active{% endif %}"><a class="nav-link" href="/generate/image">Generate AI Image</a></li>
-            <li class="nav-item {% if request.path == '/generate/text' %}active{% endif %}"><a class="nav-link" href="/generate/text">Generate AI Text</a></li>
+            <li class="nav-item dropdown {% if request.path == '/generate/image' or request.path == '/generate/text' %}active{% endif %}">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  AI Tools
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item {% if request.path == '/generate/image' %}active{% endif %}" href="/generate/image">Generate AI Image</a>
+                  <a class="dropdown-item {% if request.path == '/generate/text' %}active{% endif %}" href="/generate/text">Generate AI Text</a>
+                  <a class="dropdown-item {% if request.path == '/transcribe' %}active{% endif %}" href="/transcribe">Transcribe Sound</a>
+                  <a class="dropdown-item {% if request.path == '/chat/pdf' %}active{% endif %}" href="/chat/pdf">Communicate with PDF</a>
+              </div>
+            </li>
             <li class="nav-item {% if request.path == '/compress/pdf' %}active{% endif %}"><a class="nav-link" href="/compress/pdf">Compress PDF</a></li>
             <li class="nav-item {% if request.path == '/search/weather' %}active{% endif %}"><a class="nav-link" href="/search/weather">Search Weather</a></li>
           </ul>
